@@ -2,14 +2,13 @@
 import dash
 from dash import Dash, html, dcc, Input, Output, dash_table, State
 import dash_bootstrap_components as dbc
-import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go
 import base64
 import dash_auth
-import numpy as np
 from datetime import timedelta
 from datetime import datetime
+
 
 
 # Se crea la lista de usuarios
@@ -19,27 +18,38 @@ usuarios = [["Research","12345"],["Institucionales","12345"]]
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Identificación de usuarios
+
 auth =dash_auth.BasicAuth(app,usuarios)
+#urllib.request.urlretrieve('https://github.com/MIturribarria/FX_Dash/blob/9e16df5417474a1a0f88407a04c55b004e6a16ed/BBVA2.jpg',
+#                            "BBVA2.jpg")
+#urllib.request.urlretrieve('https://github.com/MIturribarria/FX_Dash/blob/9e16df5417474a1a0f88407a04c55b004e6a16ed/BBVA.jpg',
+#                            "BBVA.jpg")
+
+                            #https://github.com/MIturribarria/FX_Dash/blob/9e16df5417474a1a0f88407a04c55b004e6a16ed/BBVA.jpg
+
 
 #Las imagenes/Logos
-BBVA = 'BBVA.jpg' # replace with your own image
-BBVA2 = 'BBVA2.jpg'
+#BBVA = Image.open('BBVA.jpg')
+#BBVA2 = Image.open('BBVA2.jpg')
 
-encoded_image = base64.b64encode(open(BBVA, 'rb').read())
-encoded_image2 = base64.b64encode(open(BBVA2, 'rb').read())
+#BBVA = 'BBVA.jpg' # replace with your own image
+#BBVA2 = 'BBVA2.jpg'
+
+#encoded_image = base64.b64encode(open(BBVA, 'rb').read())
+#encoded_image2 = base64.b64encode(open(BBVA2, 'rb').read())
 
 # Se importan los datos en la carpeta
-df_tabla_eco = pd.read_csv('Tabla_eco.csv')
-df_last = pd.read_csv('Last.csv')
-df_rsi = pd.read_csv('RSI.csv')
-df_stocastic = pd.read_csv('Stocastic.csv')
-df_dss = pd.read_csv('DSS.csv')
-df_tabla_tec = pd.read_csv ('Tabla_tec.csv')
-df_carry = pd.read_csv ('Carry.csv')
-df_25rr = pd.read_csv ('25RR.csv')
-df_iv3m = pd.read_csv ('Vol3M.csv')
-df_tabla_vol = pd.read_csv ('Tabla_vol.csv')
-df_bis = pd.read_csv ('BIS.csv')
+df_tabla_eco = pd.read_csv('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/Tabla_eco.csv')
+df_last = pd.read_csv('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/Last.csv')
+df_rsi = pd.read_csv('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/RSI.csv')
+df_stocastic = pd.read_csv('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/Stocastic.csv')
+df_dss = pd.read_csv('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/DSS.csv')
+df_tabla_tec = pd.read_csv ('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/Tabla_tec.csv')
+df_carry = pd.read_csv ('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/Carry.csv')
+df_25rr = pd.read_csv ('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/25RR.csv')
+df_iv3m = pd.read_csv ('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/Vol3M.csv')
+df_tabla_vol = pd.read_csv ('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/Tabla_vol.csv')
+df_bis = pd.read_csv ('https://raw.githubusercontent.com/MIturribarria/FX_Dash/main/BIS.csv')
 
 
 
@@ -50,10 +60,10 @@ df_last['Date'] =  pd.to_datetime(df_last['Date'], format = '%d/%m/%Y')
 #Se hace la aplicación
 app.layout = html.Div([
 
-        dbc.Row([dbc.Col(html.Img(src='data:image/jpg;base64,{}'.format(encoded_image.decode())),
+        dbc.Row([dbc.Col(html.Img(src=app.get_asset_url('BBVA.jpg')),
                          width=6,
                          ),
-                 dbc.Col(html.Img(src='data:image/jpg;base64,{}'.format(encoded_image2.decode())),
+                 dbc.Col(html.Img(src=app.get_asset_url('BBVA2.jpg')),
                          width={'seize':3, 'offset': 3},
                          ),
         ]),
